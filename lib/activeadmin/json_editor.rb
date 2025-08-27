@@ -5,7 +5,9 @@ require 'activeadmin/resource_dsl'
 module ActiveAdmin
   module JsonEditor
     class Engine < ::Rails::Engine
-      config.assets.precompile += %w(img/jsoneditor-icons.png)
+      initializer "activeadmin_json_editor.assets" do |app|
+        app.config.assets.precompile += %w[img/jsoneditor-icons.png] if app.config.respond_to?(:assets)
+      end
 
       rake_tasks do
         task 'assets:precompile' do
